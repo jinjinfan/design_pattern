@@ -1,6 +1,7 @@
 #include <memory>
 #include "BankAccount.h"
 #include "VirtualProxy.h"
+#include "CommuProxy.h"
 
 void smart_pointers() {
     std::shared_ptr<CurrentBankAccount> b = std::make_shared<CurrentBankAccount>(123);
@@ -25,10 +26,24 @@ void virtual_proxy() {
     draw_image(lazyBitmap);
 }
 
+void tryit(Pingable& p) {
+    wcout << p.ping(L"ping") << "\t";
+}
+
 int main() {
     std::cout << "Smart pointers!" << std::endl;
     smart_pointers();
     std::cout << "Virtual proxy!" << std::endl;
     virtual_proxy();
+    std::cout << "Communication proxy----local pong!" << std::endl;
+    Pong pp;
+    for (int size = 0; size < 10; ++size) {
+        tryit(pp);
+    }
+    std::cout << "Communication proxy-----remote pong!" << std::endl;
+    RemotePong remotePong;
+    for (int size = 0; size < 10; ++size) {
+        tryit(remotePong);
+    }
     return 0;
 }
