@@ -1,6 +1,7 @@
 #include <iostream>
-#include "Product.h"
-#include "Rectangle.h"
+#include "OCP.h"
+#include "LSP.h"
+#include "ISP.h"
 
 void process(Rectangle& r) {
     int w = r.getWidth();
