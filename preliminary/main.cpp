@@ -2,6 +2,7 @@
 #include "OCP.h"
 #include "LSP.h"
 #include "ISP.h"
+#include "DI.h"
 
 void process(Rectangle& r) {
     int w = r.getWidth();
@@ -35,5 +36,20 @@ int main() {
 
     Square s {5};
     process(s);
+
+    std::cout << "Normal injection" << std::endl;
+    auto e = std::make_shared<Engine>();
+    auto log = std::make_shared<Logger>();
+    auto c = std::make_shared<Car>(e, log);
+    std::cout << *c << std::endl;
+    std::cout << std::endl;
+    std::cout << "Boost DI injection" << std::endl;
+    using namespace boost;
+    auto injector = di::make_injector(
+            di::bind<ILogger>().to<Logger>()
+    );
+    auto c1 = injector.create<std::shared_ptr<Car>>();
+    std::cout << *c1 << std::endl;
+    return 0;
     return 0;
 }
