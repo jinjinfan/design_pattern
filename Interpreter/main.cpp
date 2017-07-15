@@ -12,7 +12,7 @@ int main() {
     auto parsed = parse(tokens);
     cout << input << " = " << parsed->eval() << endl;
 
-//    string a = "void f() {}";
-//    auto res = overmath::parse(a.begin(), a.end());
+    wstring a{L"void f() {}"};
+    auto res = overmath::parse(a.begin(), a.end());
     return 0;
 }
