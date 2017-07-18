@@ -3,5 +3,5 @@ project(State)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp BoostState.h)
 add_executable(State ${SOURCE_FILES})
