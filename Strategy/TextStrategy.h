@@ -52,27 +52,27 @@ struct TextProcessorDynamic {
     string str() const { return oss.str();}
 
     void append_list(const vector<string> items) {
-        list_strategy->start();
+        list_strategy->start(oss);
         for(auto& item: items)
-            list_strategy->add_list_item(item);
-        list_strategy->end();
+            list_strategy->add_list_item(oss, item);
+        list_strategy->end(oss);
     }
 
     void set_output_format(OutputFormat format) {
         switch(format)
         {
             case OutputFormat::MarkDown:
-                list_strategy = make_unique<MarkDownListStrategy>();
+                list_strategy = std::make_unique<MarkDownListStrategy>();
                 break;
             case OutputFormat::Html:
-                list_strategy = make_unique<HtmlListStrategy>();
+                list_strategy = std::make_unique<HtmlListStrategy>();
                 break;
             default:
                 throw runtime_error("Unsupported strategy.");
         }
     }
 private:
-    osstringstream oss;
+    ostringstream oss;
     unique_ptr<ListStrategy> list_strategy;
 };
 
@@ -86,13 +86,13 @@ struct TextProcessorStatic {
     string str() const { return oss.str();}
 
     void append_list(const vector<string> items) {
-        list_strategy->start();
+        list_strategy->start(oss);
         for(auto& item: items)
-            list_strategy->add_list_item(item);
-        list_strategy->end();
+            list_strategy->add_list_item(oss, item);
+        list_strategy->end(oss);
     }
 private:
-    osstringstream oss;
+    ostringstream oss;
     unique_ptr<LS> list_strategy;
 };
 
@@ -111,7 +111,7 @@ void test_processor_dynamic() {
 void test_processor_static() {
     TextProcessorStatic<MarkDownListStrategy> tpm;
     tpm.append_list({"foo", "bar", "baz"});
-    cout <<tpd.str() << endl;
+    cout <<tpm.str() << endl;
 
     TextProcessorStatic<HtmlListStrategy> tph;
     tph.append_list({"foo", "bar", "baz"});

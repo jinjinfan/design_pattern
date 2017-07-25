@@ -53,7 +53,7 @@ inline ostream& operator<<(ostream& os, const Trigger& t)
   case Trigger::CallConnected:
     os << "call connected";
     break;
-  case Trigger::PlacedOnHold:
+  case Trigger::PlaceOnHold:
     os << "placed on hold";
     break;
   case Trigger::TakenOffHold:
@@ -79,7 +79,7 @@ void States() {
     rules[State::Connected] = {
         {Trigger::LeftMessage, State::OffHook},
         {Trigger::HungUp, State::OffHook},
-        {Trigger::PlacedOnHold, State::OnHold}
+        {Trigger::PlaceOnHold, State::OnHold}
     };
 
   rules[State::OnHold] = {
